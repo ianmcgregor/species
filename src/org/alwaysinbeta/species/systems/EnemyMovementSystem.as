@@ -18,7 +18,6 @@ package org.alwaysinbeta.species.systems {
 		private var _container : GameContainer;
 		private var _transformMapper : ComponentMapper;
 		private var _velocityMapper : ComponentMapper;
-		private const SPEED: Number = 0.15;
 		private const MIN_DISTANCE : int = 1;
 		private var _levelMapper : ComponentMapper;
 		private var _isJumping : Boolean;

@@ -1,14 +1,14 @@
 package org.alwaysinbeta.species.factories {
-	import org.alwaysinbeta.species.spatials.LevelGfx;
-	import org.alwaysinbeta.species.components.Level;
 	import com.artemis.Entity;
 	import com.artemis.World;
+
 	import org.alwaysinbeta.species.components.CollisionRect;
 	import org.alwaysinbeta.species.components.Enemy;
 	import org.alwaysinbeta.species.components.Expires;
 	import org.alwaysinbeta.species.components.Friend;
 	import org.alwaysinbeta.species.components.Health;
 	import org.alwaysinbeta.species.components.Hero;
+	import org.alwaysinbeta.species.components.Level;
 	import org.alwaysinbeta.species.components.SpatialForm;
 	import org.alwaysinbeta.species.components.Transform;
 	import org.alwaysinbeta.species.components.Velocity;
@@ -21,14 +21,15 @@ package org.alwaysinbeta.species.factories {
 	import org.alwaysinbeta.species.spatials.FriendGfx;
 	import org.alwaysinbeta.species.spatials.HealthBarGfx;
 	import org.alwaysinbeta.species.spatials.HeroGfx;
+	import org.alwaysinbeta.species.spatials.LevelGfx;
 
 	public class EntityFactory {
 		
-		public static function createLevel(world : World, xml: XML) : Entity {
+		public static function createLevel(world : World, num: int) : Entity {
 			var e : Entity;
 			e = world.createEntity();
 			e.setTag(EntityTag.LEVEL);
-			e.addComponent(new Level(xml));
+			e.addComponent(new Level(num));
 			e.addComponent(new Transform(0, 0));
 			e.addComponent(new SpatialForm(LevelGfx));
 			e.refresh();
@@ -70,7 +71,7 @@ package org.alwaysinbeta.species.factories {
 			return e;
 		}
 
-		public static function createEnemy(world : World) : Entity {
+		public static function createWeaponisedEnemy(world : World) : Entity {
 			var e : Entity = world.createEntity();
 			e.setGroup(EntityGroup.ENEMIES);
 
@@ -78,6 +79,21 @@ package org.alwaysinbeta.species.factories {
 			e.addComponent(new SpatialForm(EnemyGfx));
 			e.addComponent(new Health(100));
 			e.addComponent(new Weapon());
+			e.addComponent(new Enemy());
+			e.addComponent(new Velocity());
+			e.addComponent(new CollisionRect(0, 0, 32, 32));
+
+			return e;
+		}
+		
+		public static function createMoustachedEnemy(world : World) : Entity {
+			trace("EntityFactory.createMoustachedEnemy(",world,")");
+			var e : Entity = world.createEntity();
+			e.setGroup(EntityGroup.ENEMIES);
+
+			e.addComponent(new Transform());
+			e.addComponent(new SpatialForm(EnemyGfx));
+			e.addComponent(new Health(100));
 			e.addComponent(new Enemy());
 			e.addComponent(new Velocity());
 			e.addComponent(new CollisionRect(0, 0, 32, 32));
@@ -97,12 +113,12 @@ package org.alwaysinbeta.species.factories {
 			return e;
 		}
 
-		public static function createFriend(world : World, x : Number, y : Number) : Entity {
+		public static function createFriend(world : World) : Entity {
 			var e : Entity = world.createEntity();
 
 			e.setGroup(EntityGroup.FRIENDS);
 
-			e.addComponent(new Transform(x, y));
+			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(FriendGfx));
 			e.addComponent(new Health(10));
 			e.addComponent(new Friend());

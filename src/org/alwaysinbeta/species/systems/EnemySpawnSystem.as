@@ -30,7 +30,7 @@ package org.alwaysinbeta.species.systems {
 			entities;
 		//	trace("EnemySpawnSystem.processEntities(",entities,")");
 			
-			var e : Entity = EntityFactory.createEnemy(_world);
+			var e : Entity = EntityFactory.createWeaponisedEnemy(_world);
 			
 			var x: int = _container.getWidth() * Math.random();
 			var y: int = 260 * Math.random() + 30;

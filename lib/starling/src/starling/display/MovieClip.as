@@ -254,7 +254,7 @@ package starling.display
                 }
             }
             
-            if (mCurrentFrame != previousFrame)
+			if (mCurrentFrame != previousFrame)
                 texture = mTextures[mCurrentFrame];
         }
         

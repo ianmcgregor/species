@@ -1,7 +1,7 @@
 package org.alwaysinbeta.species.spatials {
+	import org.alwaysinbeta.species.assets.Assets;
 	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.textures.Texture;
 
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
@@ -10,8 +10,6 @@ package org.alwaysinbeta.species.spatials {
 	import org.alwaysinbeta.games.base.Canvas;
 	import org.alwaysinbeta.games.base.Spatial;
 	import org.alwaysinbeta.species.components.Level;
-
-	import flash.display.BitmapData;
 
 	/**
 	 * @author McFamily
@@ -30,9 +28,7 @@ package org.alwaysinbeta.species.spatials {
 		override public function initalize() : void {
 			var levelMapper : ComponentMapper = new ComponentMapper(Level, _world);
 			_level = levelMapper.get(_owner);
-			
-			_tiles = [Texture.fromBitmapData(new BitmapData(16, 16, false, 0xFF000000)), Texture.fromBitmapData(new BitmapData(16, 16, false, 0xFFFFFFFF))];
-			
+			_tiles = Assets.tiles;
 			_container = new Sprite();
 			
 			var map: Array = _level.map;
@@ -49,25 +45,6 @@ package org.alwaysinbeta.species.spatials {
 					_container.addChild(tile);
 				}
 			}
-//			var currentX : int;
-//			var currentY : int;
-//			
-//			var map: Array = _level.map;
-//			var l: int = map.length;
-//			for (var i : int = 0; i < l; ++i) {
-//				var index: int = map[i];
-//				var tile : Image = new Image(_tiles[index]);
-//				tile.x = currentX;
-//				tile.y = currentY;
-//				_container.addChild(tile);
-//				
-//				currentX += 16;
-//				
-//				if(i > 0 && i % 40 == 0){
-//					currentX = 0;
-//					currentY += 16;
-//				}
-//			}
 			
 			_container.flatten();
 			
@@ -81,7 +58,7 @@ package org.alwaysinbeta.species.spatials {
 		
 		override public function render(g : Canvas) : void {
 			if(!g.contains(_container)){
-				g.addChild(_container);
+				g.addChildAt(_container, 0);
 			}
 		}
 

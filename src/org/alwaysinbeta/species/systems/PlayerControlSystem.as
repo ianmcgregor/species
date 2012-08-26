@@ -1,24 +1,20 @@
 package org.alwaysinbeta.species.systems {
-	import flash.utils.setTimeout;
-	import flash.utils.getTimer;
-	import flash.geom.Point;
-
-	import org.alwaysinbeta.species.constants.EntityTag;
-	import org.alwaysinbeta.species.components.Level;
-	import org.alwaysinbeta.species.components.Velocity;
-	import org.alwaysinbeta.species.factories.EntityFactory;
-
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
 	import com.artemis.EntityProcessingSystem;
-
-	import flash.ui.Keyboard;
 
 	import org.alwaysinbeta.games.base.GameContainer;
 	import org.alwaysinbeta.games.utils.IKeyListener;
 	import org.alwaysinbeta.games.utils.Input;
 	import org.alwaysinbeta.species.components.Hero;
+	import org.alwaysinbeta.species.components.Level;
 	import org.alwaysinbeta.species.components.Transform;
+	import org.alwaysinbeta.species.components.Velocity;
+	import org.alwaysinbeta.species.constants.EntityTag;
+	import org.alwaysinbeta.species.factories.EntityFactory;
+
+	import flash.ui.Keyboard;
+	import flash.utils.getTimer;
 
 	/**
 	 * @author McFamily
@@ -101,10 +97,10 @@ package org.alwaysinbeta.species.systems {
 			
 			if (_shoot) {
 				var direction : int = _lastDirection;
-				var bulletX: int = direction > 0 ? transform.x + 34 : transform.x - 2;
+				var bulletX: int = direction > 0 ? transform.x + 40 : transform.x - 4;
 				var bullet : Entity = EntityFactory.createBullet(_world);
-				Transform(bullet.getComponent(Transform)).setLocation(bulletX, transform.y);
-				Velocity(bullet.getComponent(Velocity)).velocityX = 10 * direction;
+				Transform(bullet.getComponent(Transform)).setLocation(bulletX, transform.y + 20);
+				Velocity(bullet.getComponent(Velocity)).velocityX = 20 * direction;
 				Velocity(bullet.getComponent(Velocity)).velocityY = -2 + Math.random() * 4;
 				bullet.refresh();
 
@@ -112,23 +108,23 @@ package org.alwaysinbeta.species.systems {
 			}
 		}
 
-		private function moveBy(x : int, y : int, transform : Transform, velocity: Velocity) : void {
-			trace("PlayerControlSystem.moveBy(",x, y, transform,")");
-			var sign : int;
-			if (x != 0 && rectCollides(transform.x + x, transform.y, 31, 31)) {
-				sign = x > 0 ? 1 : -1;
-				while (x != 0) {
-					if (!rectCollides(transform.x + sign, transform.y, 31, 31)) {
-						transform.x += sign;
-					}
-					x -= sign;
-				}
-			} else {
-				transform.x += x;
-			}
-			
-			transform.y += y;
-		}
+//		private function moveBy(x : int, y : int, transform : Transform, velocity: Velocity) : void {
+//			trace("PlayerControlSystem.moveBy(",x, y, transform,")");
+//			var sign : int;
+//			if (x != 0 && rectCollides(transform.x + x, transform.y, 31, 31)) {
+//				sign = x > 0 ? 1 : -1;
+//				while (x != 0) {
+//					if (!rectCollides(transform.x + sign, transform.y, 31, 31)) {
+//						transform.x += sign;
+//					}
+//					x -= sign;
+//				}
+//			} else {
+//				transform.x += x;
+//			}
+//			
+//			transform.y += y;
+//		}
 		
 		private function rectCollides(x: int, y: int, width: int, height: int) : Boolean {
 			return _level.collides(x, y) || _level.collides(x + width, y) || _level.collides(x, y + height) || _level.collides(x + width, y + height);

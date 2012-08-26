@@ -6,7 +6,6 @@ package org.alwaysinbeta.species.states {
 
 	import org.alwaysinbeta.games.base.GameContainer;
 	import org.alwaysinbeta.species.Species;
-	import org.alwaysinbeta.species.assets.Assets;
 	import org.alwaysinbeta.species.constants.EntityTag;
 	import org.alwaysinbeta.species.constants.StateConstants;
 	import org.alwaysinbeta.species.factories.EntityFactory;
@@ -74,7 +73,7 @@ package org.alwaysinbeta.species.states {
 			
 			// init entities
 			
-			EntityFactory.createLevel(_world, XML(new Assets.Level1()));
+			EntityFactory.createLevel(_world, 1);
 			EntityFactory.createHero(_world);
 		}
 		
