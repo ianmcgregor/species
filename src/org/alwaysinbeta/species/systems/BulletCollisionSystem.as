@@ -1,4 +1,5 @@
 package org.alwaysinbeta.species.systems {
+	import org.alwaysinbeta.species.factories.SoundFactory;
 	import org.alwaysinbeta.species.constants.EntityTag;
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
@@ -43,6 +44,7 @@ package org.alwaysinbeta.species.systems {
 						if (collisionExists(bullet, enemy)) {
 							var bulletTransform : Transform = _transformMapper.get(bullet);
 							EntityFactory.createExplosion(_world, bulletTransform.x, bulletTransform.y).refresh();
+							SoundFactory.explode();
 //							trace('world.deleteEntity(bullet);: ');
 							_world.deleteEntity(bullet);
 
@@ -53,6 +55,7 @@ package org.alwaysinbeta.species.systems {
 								var transform : Transform = _transformMapper.get(enemy);
 
 								EntityFactory.createExplosion(_world, transform.x, transform.y).refresh();
+								SoundFactory.explode();
 
 //								trace('world.deleteEntity(ship);: ');
 								_world.deleteEntity(enemy);

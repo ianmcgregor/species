@@ -1,4 +1,5 @@
 package org.alwaysinbeta.species.systems {
+	import org.alwaysinbeta.species.factories.SoundFactory;
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
 	import com.artemis.EntityProcessingSystem;
@@ -86,6 +87,8 @@ package org.alwaysinbeta.species.systems {
 				
 				_processLevel = false;
 				e.refresh();
+				
+				SoundFactory.startLevel();
 			}
 		}
 

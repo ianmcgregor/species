@@ -1,4 +1,5 @@
 package org.alwaysinbeta.species.systems {
+	import org.alwaysinbeta.species.factories.SoundFactory;
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
 	import com.artemis.EntityProcessingSystem;
@@ -103,6 +104,8 @@ package org.alwaysinbeta.species.systems {
 				Velocity(bullet.getComponent(Velocity)).velocityX = 20 * direction;
 				Velocity(bullet.getComponent(Velocity)).velocityY = -2 + Math.random() * 4;
 				bullet.refresh();
+				
+				SoundFactory.shoot();
 
 //				_shoot = false;
 			}
