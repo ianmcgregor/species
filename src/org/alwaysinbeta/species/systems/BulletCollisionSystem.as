@@ -44,7 +44,7 @@ package org.alwaysinbeta.species.systems {
 						if (collisionExists(bullet, enemy)) {
 							var bulletTransform : Transform = _transformMapper.get(bullet);
 							EntityFactory.createExplosion(_world, bulletTransform.x, bulletTransform.y).refresh();
-							SoundFactory.explode();
+							
 //							trace('world.deleteEntity(bullet);: ');
 							_world.deleteEntity(bullet);
 
@@ -55,7 +55,6 @@ package org.alwaysinbeta.species.systems {
 								var transform : Transform = _transformMapper.get(enemy);
 
 								EntityFactory.createExplosion(_world, transform.x, transform.y).refresh();
-								SoundFactory.explode();
 
 //								trace('world.deleteEntity(ship);: ');
 								_world.deleteEntity(enemy);
@@ -66,6 +65,12 @@ package org.alwaysinbeta.species.systems {
 						if(collisionExists(bullet, hero)) {
 							var heroHealth : Health = _healthMapper.get(hero);
 							heroHealth.addDamage(4);
+							
+							if (!heroHealth.isAlive()) {
+								var t : Transform = _transformMapper.get(hero);
+								EntityFactory.createExplosion(_world, t.x, t.y).refresh();
+								_world.deleteEntity(hero);
+							}
 						}
 					}
 				}

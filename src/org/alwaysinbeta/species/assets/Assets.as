@@ -11,20 +11,48 @@ package org.alwaysinbeta.species.assets {
 //		public static const SpriteSheet : Class;
 //		[Embed(source="tiles/trimmed/assets.xml", mimeType="application/octet-stream")] 
 //		public static const SpriteSheetXML:Class;
-
+		
+		///// PARTICLES
+		
 		// embed configuration XML
-		[Embed(source="particles/particle.pex", mimeType="application/octet-stream")]
-		public static const ParticlePex:Class;
-		 
+		[Embed(source="particles/explode.pex", mimeType="application/octet-stream")]
+		private static const ExplodePex:Class;
 		// embed particle texture
-		[Embed(source = "particles/texture.png")]
-		public static const ParticleTexture:Class;
+		[Embed(source = "particles/explode.png")]
+		private static const ExplodeTexture:Class;
+		
+		public static const explodePex:XML = XML(new ExplodePex());
+		public static const explodeTexture:Texture = Texture.fromBitmap(new ExplodeTexture());
+		
+		[Embed(source="particles/bomb.pex", mimeType="application/octet-stream")]
+		public static const BombPex:Class;
+		[Embed(source = "particles/bomb.png")]
+		public static const BombTexture:Class;
+
+		[Embed(source="particles/fireball.pex", mimeType="application/octet-stream")]
+		public static const FireBallPex:Class;
+		 
+		[Embed(source = "particles/fireball.png")]
+		public static const FireBallTexture:Class;
+		
+		[Embed(source="particles/fireball2.pex", mimeType="application/octet-stream")]
+		private static const FireBall2Pex:Class;
+		[Embed(source = "particles/fireball2.png")]
+		private static const FireBall2Texture:Class;
+		
+		public static const fireBall2Pex:XML = XML(new FireBall2Pex());
+		public static const fireBall2Texture:Texture = Texture.fromBitmap(new FireBall2Texture());
+				
+		///// TILEMAPS
 		
 		[Embed(source="tilemaps/Level_1.oel", mimeType="application/octet-stream")] 
 		private static const Level1:Class;
 
 		[Embed(source="tilemaps/Level_2.oel", mimeType="application/octet-stream")] 
 		private static const Level2:Class;
+
+		[Embed(source="tilemaps/Level_3.oel", mimeType="application/octet-stream")] 
+		private static const Level3:Class;
 		
 		public static function getLevel(num: int): XML {
 			switch(num){
@@ -33,6 +61,9 @@ package org.alwaysinbeta.species.assets {
 					break;
 				case 2:
 					return XML(new Level2());
+					break;
+				case 3:
+					return XML(new Level3());
 					break;
 				default:
 			}

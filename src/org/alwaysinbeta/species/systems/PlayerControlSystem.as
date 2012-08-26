@@ -105,7 +105,7 @@ package org.alwaysinbeta.species.systems {
 				Velocity(bullet.getComponent(Velocity)).velocityY = -2 + Math.random() * 4;
 				bullet.refresh();
 				
-				SoundFactory.shoot();
+//				SoundFactory.shoot();
 
 //				_shoot = false;
 			}

@@ -1,4 +1,5 @@
 package org.alwaysinbeta.species.states {
+	import org.alwaysinbeta.species.systems.EnemyShipSystem;
 	import com.artemis.Entity;
 	import com.artemis.EntitySystem;
 	import com.artemis.SystemManager;
@@ -38,6 +39,7 @@ package org.alwaysinbeta.species.states {
 		private var _healthBarRenderSystem : EntitySystem;
 		private var _enemyShooterSystem : EntitySystem;
 		private var _levelInitializeSystem : EntitySystem;
+		private var _enemyShipSystem : EntitySystem;
 
 		public function PlayState(container : GameContainer, main : Species) {
 			super();
@@ -68,6 +70,7 @@ package org.alwaysinbeta.species.states {
 			_healthBarRenderSystem = systemManager.setSystem(new HealthBarRenderSystem());
 			_enemyShooterSystem = systemManager.setSystem(new EnemyShooterSystem());
 			_levelInitializeSystem = systemManager.setSystem(new LevelInitializeSystem());
+			_enemyShipSystem = systemManager.setSystem(new EnemyShipSystem(_container));
 			
 			systemManager.initializeAll();
 			
@@ -103,6 +106,7 @@ package org.alwaysinbeta.species.states {
 			_bulletCollisionSystem.process();
 			_healthBarRenderSystem.process();
 			_enemyShooterSystem.process();
+			_enemyShipSystem.process();
 			
 			// render
 			

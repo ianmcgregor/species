@@ -37,11 +37,11 @@ package org.alwaysinbeta.species.spatials {
 			_container = new Sprite();
 			
 			_bg = new Quad(200, 10);
-			_bg.color = 0x00ff00;
+			_bg.color = 0x333333;
 			_container.addChild(_bg);
 			
 			_bar = new Quad(198, 8);
-			_bar.color = 0xffff00;
+			_bar.color = 0x00ff00;
 			_bar.x = _bar.y = 1;
 			_container.addChild(_bar);
 		}
@@ -57,6 +57,9 @@ package org.alwaysinbeta.species.spatials {
 			
 //			_bar.scaleX = Utils.lerp(_bar.scaleX, _health.getHealthPercentage(), 0.1);
 			_bar.scaleX = _health.getHealthPercentage();
+			
+			if(_bar.scaleX < 0.5) _bar.color = 0xffff00;
+			if(_bar.scaleX < 0.2) _bar.color = 0xff0000;
 		}
 	}
 }

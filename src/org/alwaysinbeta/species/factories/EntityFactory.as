@@ -1,4 +1,7 @@
 package org.alwaysinbeta.species.factories {
+	import org.alwaysinbeta.species.spatials.BombGfx;
+	import org.alwaysinbeta.species.components.EnemyShip;
+	import org.alwaysinbeta.species.spatials.EnemyShipGfx;
 	import com.artemis.Entity;
 	import com.artemis.World;
 
@@ -44,7 +47,7 @@ package org.alwaysinbeta.species.factories {
 			e.addComponent(new Velocity());
 			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(HeroGfx));
-			e.addComponent(new CollisionRect(0, 0, 20, 20));
+			e.addComponent(new CollisionRect(0, 0, 32, 32));
 			e.addComponent(new Health(1000));
 			e.addComponent(new Hero());
 			e.refresh();
@@ -60,6 +63,8 @@ package org.alwaysinbeta.species.factories {
 		}
 		
 		public static function createBullet(world : World) : Entity {
+			SoundFactory.shoot();
+			
 			var e : Entity = world.createEntity();
 			e.setGroup(EntityGroup.BULLETS);
 
@@ -77,7 +82,7 @@ package org.alwaysinbeta.species.factories {
 
 			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(EnemyGfx));
-			e.addComponent(new Health(100));
+			e.addComponent(new Health(50));
 			e.addComponent(new Weapon());
 			e.addComponent(new Enemy());
 			e.addComponent(new Velocity());
@@ -87,21 +92,35 @@ package org.alwaysinbeta.species.factories {
 		}
 		
 		public static function createMoustachedEnemy(world : World) : Entity {
-			trace("EntityFactory.createMoustachedEnemy(",world,")");
 			var e : Entity = world.createEntity();
 			e.setGroup(EntityGroup.ENEMIES);
 
 			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(EnemyGfx));
-			e.addComponent(new Health(100));
+			e.addComponent(new Health(80));
 			e.addComponent(new Enemy());
 			e.addComponent(new Velocity());
 			e.addComponent(new CollisionRect(0, 0, 32, 32));
 
 			return e;
 		}
+		
+		public static function createEnemyShip(world : World) : Entity {
+			var e : Entity = world.createEntity();
+			e.setGroup(EntityTag.ENEMY_SHIP);
+
+			e.addComponent(new Transform());
+			e.addComponent(new SpatialForm(EnemyShipGfx));
+			e.addComponent(new EnemyShip());
+			e.addComponent(new Velocity(8));
+			e.addComponent(new Weapon());
+
+			return e;
+		}
 
 		public static function createExplosion(world : World, x : Number, y : Number) : Entity {
+			SoundFactory.explode();
+			
 			var e : Entity = world.createEntity();
 
 			e.setGroup(EntityGroup.EFFECTS);
@@ -109,6 +128,20 @@ package org.alwaysinbeta.species.factories {
 			e.addComponent(new Transform(x, y));
 			e.addComponent(new SpatialForm(ExplosionGfx));
 			e.addComponent(new Expires(1000));
+
+			return e;
+		}
+		
+		public static function createBomb(world : World, x : Number, y : Number) : Entity {
+			var e : Entity = world.createEntity();
+
+			e.setGroup(EntityGroup.BOMBS);
+
+			e.addComponent(new Transform(x, y));
+			e.addComponent(new Velocity());
+			e.addComponent(new SpatialForm(BombGfx));
+			e.addComponent(new Expires(2000));
+			e.addComponent(new CollisionRect(0, 0, 16, 16));
 
 			return e;
 		}

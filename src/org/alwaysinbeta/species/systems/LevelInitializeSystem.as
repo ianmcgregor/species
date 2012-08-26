@@ -1,13 +1,15 @@
 package org.alwaysinbeta.species.systems {
-	import org.alwaysinbeta.species.factories.SoundFactory;
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
 	import com.artemis.EntityProcessingSystem;
+	import com.artemis.utils.IImmutableBag;
 
 	import org.alwaysinbeta.species.components.Level;
 	import org.alwaysinbeta.species.components.Transform;
+	import org.alwaysinbeta.species.constants.EntityGroup;
 	import org.alwaysinbeta.species.constants.EntityTag;
 	import org.alwaysinbeta.species.factories.EntityFactory;
+	import org.alwaysinbeta.species.factories.SoundFactory;
 
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -53,6 +55,8 @@ package org.alwaysinbeta.species.systems {
 			if(_processLevel) {
 				//level.parseOgmo( Assets.getLevel(level.num) );
 				
+				clear();
+				
 				heroTransfrom.x = level.hero.x;
 				heroTransfrom.y = level.hero.y;
 				
@@ -70,7 +74,6 @@ package org.alwaysinbeta.species.systems {
 	
 				var moustacheEnemies: Vector.<Point> = level.moustacheEnemies;
 				l = moustacheEnemies.length;
-				trace('moustacheEnemies.length: ' + (moustacheEnemies.length));
 				for (i = 0; i < l; ++i) {
 					entity = EntityFactory.createMoustachedEnemy(_world);
 					Transform(entity.getComponent(Transform)).setLocation(moustacheEnemies[i].x, moustacheEnemies[i].y);
@@ -85,10 +88,38 @@ package org.alwaysinbeta.species.systems {
 					entity.refresh();
 				}
 				
+				if(level.ship) {
+					entity = EntityFactory.createEnemyShip(_world);
+					Transform(entity.getComponent(Transform)).setLocation(level.ship.x, level.ship.y);
+					entity.refresh();
+				}
+				
 				_processLevel = false;
 				e.refresh();
 				
 				SoundFactory.startLevel();
+			}
+		}
+
+		private function clear() : void {
+			var bullets : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.BULLETS);
+			var enemies : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.ENEMIES);
+			var bombs : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.BOMBS);
+			
+			killAll(bullets);
+			killAll(enemies);
+			killAll(bombs);
+
+			var ship: Entity = _world.getTagManager().getEntity(EntityTag.ENEMY_SHIP);
+			if(ship) _world.deleteEntity(ship);
+		}
+		
+		private function killAll(bag: IImmutableBag): void {
+			var l : int;
+			var i : int;
+			l = bag.size();
+			for (i = 0; i < l; ++i) {
+				_world.deleteEntity(bag.get(i));
 			}
 		}
 

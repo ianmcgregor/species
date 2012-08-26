@@ -36,11 +36,12 @@ package org.alwaysinbeta.species.systems {
 			entities;
 			
 			var hero : Entity = _world.getTagManager().getEntity(EntityTag.HERO);
-			if(hero){
+			if(hero != null){
+				var transform : Transform = _transformMapper.get(hero);
 				var health : Health = _healthMapper.get(hero);
 				var enemies : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.ENEMIES);
 				
-				if (hero != null && enemies != null) {
+				if (enemies != null) {
 					enemyLoop:
 					for (var a : int = 0; enemies.size() > a; a++) {
 						var enemy : Entity = enemies.get(a);
@@ -49,12 +50,31 @@ package org.alwaysinbeta.species.systems {
 							health.addDamage(1);
 	
 							if (!health.isAlive()) {
-								var transform : Transform = _transformMapper.get(hero);
 	
 								EntityFactory.createExplosion(_world, transform.x, transform.y).refresh();
 	
 								_world.deleteEntity(hero);
 								continue enemyLoop;
+							}
+						}
+					}
+				}
+				
+				var bombs : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.BOMBS);
+				if (bombs != null) {
+					bombsLoop:
+					for (var b : int = 0; bombs.size() > b; b++) {
+						var bomb : Entity = bombs.get(b);
+	
+						if (collisionExists(hero, bomb)) {
+							
+							health.addDamage(50);
+							
+							if (!health.isAlive()) {
+								EntityFactory.createExplosion(_world, transform.x, transform.y).refresh();
+	
+								_world.deleteEntity(hero);
+								continue bombsLoop;
 							}
 						}
 					}

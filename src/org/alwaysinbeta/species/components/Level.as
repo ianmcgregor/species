@@ -18,6 +18,7 @@ package org.alwaysinbeta.species.components {
 		public var exit : Rectangle;
 		public var moustacheEnemies : Vector.<Point>;
 		public var friends : Vector.<Point>;
+		public var ship : Point;
 
 		public function Level(num : int) {
 			this.num = num;
@@ -46,6 +47,7 @@ package org.alwaysinbeta.species.components {
 			
 			var heroXML: XML = xml.descendants('Hero')[0];
 			hero = new Point(heroXML.@x, heroXML.@y);
+
 			
 			var exitXML: XML = xml.descendants('Exit')[0];
 			exit = new Rectangle(exitXML.@x, exitXML.@y, exitXML.@width, exitXML.@height);
@@ -70,6 +72,9 @@ package org.alwaysinbeta.species.components {
 			for each (node in xmlList) {
 				friends[friends.length] = new Point(node.@x, node.@y);
 			}
+
+			var shipXML: XML = xml.descendants('Ship')[0];
+			ship = shipXML != null ? new Point(shipXML.@x, shipXML.@y) : null;
 			
 //			<EnemyMoustache id="0" x="528" y="336" />
 //    		<EnemyMoustache id="1" x="432" y="384" />
