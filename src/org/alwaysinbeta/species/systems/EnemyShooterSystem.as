@@ -1,4 +1,6 @@
 package org.alwaysinbeta.species.systems {
+	import org.alwaysinbeta.species.constants.EntityTag;
+	import org.alwaysinbeta.species.components.Velocity;
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
 	import com.artemis.EntityProcessingSystem;
@@ -31,14 +33,19 @@ package org.alwaysinbeta.species.systems {
 		override protected function processEntity(e : Entity) : void {
 			var weapon : Weapon = _weaponMapper.get(e);
 
-			if (weapon.getShotAt() + 2000 < _now) {
+			if (weapon.getShotAt() + 100 < _now) {
+				
 				var transform : Transform = _transformMapper.get(e);
-
-				var missile : Entity = EntityFactory.createBullet(_world);
-				Transform(missile.getComponent(Transform)).setLocation(transform.x, transform.y + 20);
-//				Velocity(missile.getComponent(Velocity)).setVelocity(-0.5);
+				
+				var hero : Entity = _world.getTagManager().getEntity(EntityTag.HERO);
+				var heroTransform : Transform = _transformMapper.get(hero);
+				var direction : int = heroTransform.x > transform.x ? 1 : -1;
+				var bulletX: int = direction > 0 ? transform.x + 34 : transform.x + 2;
+				var bullet : Entity = EntityFactory.createBullet(_world);
+				Transform(bullet.getComponent(Transform)).setLocation( bulletX, transform.y);
+				Velocity(bullet.getComponent(Velocity)).velocityX = 8 * direction;
 //				Velocity(missile.getComponent(Velocity)).setAngle(270);
-				missile.refresh();
+				bullet.refresh();
 
 				weapon.setShotAt(_now);
 			}

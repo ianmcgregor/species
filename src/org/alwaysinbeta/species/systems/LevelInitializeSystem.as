@@ -32,7 +32,7 @@ package org.alwaysinbeta.species.systems {
 			var hero : Entity = _world.getTagManager().getEntity(EntityTag.HERO);
 			var heroTransfrom: Transform = _transformMapper.get(hero);
 			heroTransfrom.x = level.hero.x;
-			heroTransfrom.y = level.hero.x;
+			heroTransfrom.y = level.hero.y;
 			
 			var enemies: Vector.<Point> = level.enemies;
 			var l: int = enemies.length;

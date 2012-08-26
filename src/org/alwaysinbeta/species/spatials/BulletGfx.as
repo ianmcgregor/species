@@ -37,6 +37,7 @@ package org.alwaysinbeta.species.spatials {
 		override public function render(g : Canvas) : void {
 			var x : Number = _transform.x;
 			var y : Number = _transform.y;
+			_quad.alpha = _expires.getLifeTime() / _initialLifeTime;
 			_quad.x = x;
 			_quad.y = y;
 			if(!g.contains(_quad)){

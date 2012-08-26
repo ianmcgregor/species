@@ -43,8 +43,8 @@ package org.alwaysinbeta.species.components {
 		public function collides(x: int, y: int): Boolean {
 			 var i: int = int(y / 16);
 			 var j: int = int(x / 16);
-			 if(i > map.length -1) return true;
-			 if(j > (map[i] as Array).length -1) return true;
+			 if(i < 0 || i > map.length -1) return true;
+			 if(j < 0 || j > (map[i] as Array).length -1) return true;
 			 return map[i][j] == 1;
 		}
 	}

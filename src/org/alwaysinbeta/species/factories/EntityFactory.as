@@ -65,7 +65,7 @@ package org.alwaysinbeta.species.factories {
 			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(BulletGfx));
 			e.addComponent(new Velocity());
-			e.addComponent(new Expires(1000));
+			e.addComponent(new Expires(1400));
 
 			return e;
 		}

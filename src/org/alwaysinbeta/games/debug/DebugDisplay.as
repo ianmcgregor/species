@@ -2,9 +2,6 @@ package org.alwaysinbeta.games.debug {
 	import starling.core.Starling;
 	import starling.display.Sprite;
 	import starling.events.Event;
-	import starling.events.KeyboardEvent;
-
-	import flash.ui.Keyboard;
 
 	/**
 	 * @author ian
@@ -16,11 +13,11 @@ package org.alwaysinbeta.games.debug {
 			super();
 			
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+//			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
 		}
 		
 		private function onAddedToStage(event : Event) : void {
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKey);
+//			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKey);
 
 			_infoText = new DriverInfoDisplay();
 			_infoText.x = 0;
@@ -41,21 +38,21 @@ package org.alwaysinbeta.games.debug {
 			_infoText.visible = Starling.current.showStats;
 		}
 		
-		private function onRemovedFromStage(event : Event) : void {
-			stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKey);
-		}
+//		private function onRemovedFromStage(event : Event) : void {
+//			stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKey);
+//		}
 		
-		private function onKey(event : KeyboardEvent) : void {
-			switch(event.keyCode) {
-				case Keyboard.SPACE:
-					Starling.current.showStats = !Starling.current.showStats;
-					_infoText.visible = Starling.current.showStats;
-					break;
-				case Keyboard.X:
-					Starling.context.dispose();
-					break;
-				default:
-			}
-		}
+//		private function onKey(event : KeyboardEvent) : void {
+//			switch(event.keyCode) {
+//				case Keyboard.SPACE:
+//					Starling.current.showStats = !Starling.current.showStats;
+//					_infoText.visible = Starling.current.showStats;
+//					break;
+//				case Keyboard.X:
+//					Starling.context.dispose();
+//					break;
+//				default:
+//			}
+//		}
 	}
 }

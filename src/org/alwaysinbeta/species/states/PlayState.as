@@ -97,7 +97,7 @@ package org.alwaysinbeta.species.states {
 			_levelInitializeSystem.process();
 			_collisionSystem.process();
 			_playerControlSystem.process();
-			//_enemyMovementSystem.process();
+			_enemyMovementSystem.process();
 			_expirationSystem.process();
 //			_enemySpawnSystem.process();
 			_movementSystem.process();
