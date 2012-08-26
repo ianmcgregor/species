@@ -2,12 +2,12 @@ package org.alwaysinbeta.species.spatials {
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
 	import com.artemis.World;
+
 	import org.alwaysinbeta.games.base.Canvas;
 	import org.alwaysinbeta.games.base.Spatial;
 	import org.alwaysinbeta.species.components.Transform;
+
 	import starling.display.Quad;
-
-
 
 	/**
 	 * @author McFamily
@@ -15,16 +15,16 @@ package org.alwaysinbeta.species.spatials {
 	public class HeroGfx extends Spatial {
 		private var _transform : Transform;
 		private var _quad : Quad;
-		
+
 		public function HeroGfx(world : World, owner : Entity) {
 			super(world, owner);
 		}
-		
+
 		override public function initalize() : void {
 			var transformMapper : ComponentMapper = new ComponentMapper(Transform, _world);
 			_transform = transformMapper.get(_owner);
 
-			_quad = new Quad(20, 20);
+			_quad = new Quad(32, 32);
 			_quad.color = 0x00ff00;
 		}
 
@@ -33,8 +33,7 @@ package org.alwaysinbeta.species.spatials {
 			var y : Number = _transform.y;
 			_quad.x = x;
 			_quad.y = y;
-			if(!g.contains(_quad))
-			{
+			if (!g.contains(_quad)) {
 				g.addChild(_quad);
 			}
 		}

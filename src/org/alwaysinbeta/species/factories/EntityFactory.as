@@ -1,4 +1,6 @@
 package org.alwaysinbeta.species.factories {
+	import org.alwaysinbeta.species.spatials.LevelGfx;
+	import org.alwaysinbeta.species.components.Level;
 	import com.artemis.Entity;
 	import com.artemis.World;
 	import org.alwaysinbeta.species.components.CollisionRect;
@@ -22,11 +24,24 @@ package org.alwaysinbeta.species.factories {
 
 	public class EntityFactory {
 		
+		public static function createLevel(world : World, xml: XML) : Entity {
+			var e : Entity;
+			e = world.createEntity();
+			e.setTag(EntityTag.LEVEL);
+			e.addComponent(new Level(xml));
+			e.addComponent(new Transform(0, 0));
+			e.addComponent(new SpatialForm(LevelGfx));
+			e.refresh();
+
+			return e;
+		}
+		
 		public static function createHero(world : World) : Entity {
 			var e : Entity;
 			e = world.createEntity();
 			e.setTag(EntityTag.HERO);
-			e.addComponent(new Transform(20, 200));
+			e.addComponent(new Velocity());
+			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(HeroGfx));
 			e.addComponent(new CollisionRect(0, 0, 20, 20));
 			e.addComponent(new Health(1000));

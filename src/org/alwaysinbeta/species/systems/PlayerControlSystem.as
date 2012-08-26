@@ -1,4 +1,7 @@
 package org.alwaysinbeta.species.systems {
+	import flash.geom.Point;
+	import org.alwaysinbeta.species.constants.EntityTag;
+	import org.alwaysinbeta.species.components.Level;
 	import org.alwaysinbeta.species.components.Velocity;
 	import org.alwaysinbeta.species.factories.EntityFactory;
 	import com.artemis.ComponentMapper;
@@ -21,6 +24,8 @@ package org.alwaysinbeta.species.systems {
 	public class PlayerControlSystem extends EntityProcessingSystem implements IKeyListener {
 		private var _container : GameContainer;
 		private var _transformMapper : ComponentMapper;
+		private var _velocityMapper : ComponentMapper;
+		private var _levelMapper : ComponentMapper;
 		private var _moveUp : Boolean;
 		private var _moveDown : Boolean;
 		private var _moveLeft : Boolean;
@@ -35,31 +40,57 @@ package org.alwaysinbeta.species.systems {
 		}
 		
 		override public function initialize() : void {
+			_levelMapper = new ComponentMapper(Level, _world);
 			_transformMapper = new ComponentMapper(Transform, _world);
+			_velocityMapper = new ComponentMapper(Velocity, _world);
 			_container.getInput().addKeyListener(this);
 		}
 		
 		override protected function processEntity(e : Entity) : void {
+			var levelEntity : Entity = _world.getTagManager().getEntity(EntityTag.LEVEL);
+			var level: Level = _levelMapper.get(levelEntity);
+			
 			var transform : Transform = _transformMapper.get(e);
+			var velocity : Velocity = _velocityMapper.get(e);
 
+			var amount : Number = _world.getDelta() * SPEED;
+			
+			var topLeft : Boolean = level.collides(transform.x, transform.y);
+			var topRight :  Boolean = level.collides(transform.x + 32, transform.y);
+			var bottomLeft :  Boolean = level.collides(transform.x, transform.y + 32);
+			var bottomRight :  Boolean = level.collides(transform.x + 32, transform.y + 32);
+			
+			if(!bottomLeft && !bottomRight) {
+				_moveDown = true;
+				_moveUp = false;
+			} else {
+				_moveDown = false;
+			}
+			
+			if(topLeft || bottomLeft) {
+				_moveLeft = false;
+			}else if(topRight || bottomRight) {
+				_moveRight = false;
+			}
+			
 			if (_moveUp) {
-				transform.addY(_world.getDelta() * -SPEED);
+				transform.addY(-amount);
 			}
 			if (_moveDown) {
-				transform.addY(_world.getDelta() * SPEED);
+				transform.addY(amount);
 			}
 			if (_moveLeft) {
-				transform.addX(_world.getDelta() * -SPEED);
+				transform.addX(-amount);
 			}
 			if (_moveRight) {
-				transform.addX(_world.getDelta() * SPEED);
+				transform.addX(amount);
 			}
 			// clamp
-			if (transform.y < 0) {
-				transform.y = 0;
-			} else if(transform.y > _container.getHeight() - 60) {
-				transform.y = _container.getHeight() - 60;
-			}
+//			if (transform.y < 0) {
+//				transform.y = 0;
+//			} else if(transform.y > _container.getHeight() - 60) {
+//				transform.y = _container.getHeight() - 60;
+//			}
 			
 			if (_shoot) {
 				var bullet : Entity = EntityFactory.createBullet(_world);
@@ -81,11 +112,11 @@ package org.alwaysinbeta.species.systems {
 					_moveUp = true;
 					_moveDown = false;
 					break;
-				case Keyboard.S:
-				case Keyboard.DOWN:
-					_moveDown = true;
-					_moveUp = false;
-					break;
+//				case Keyboard.S:
+//				case Keyboard.DOWN:
+//					_moveDown = true;
+//					_moveUp = false;
+//					break;
 				case Keyboard.A:
 				case Keyboard.LEFT:
 					_moveLeft = true;
@@ -109,10 +140,10 @@ package org.alwaysinbeta.species.systems {
 				case Keyboard.UP:
 					_moveUp = false;
 					break;
-				case Keyboard.S:
-				case Keyboard.DOWN:
-					_moveDown = false;
-					break;
+//				case Keyboard.S:
+//				case Keyboard.DOWN:
+//					_moveDown = false;
+//					break;
 				case Keyboard.A:
 				case Keyboard.LEFT:
 					_moveLeft = false;

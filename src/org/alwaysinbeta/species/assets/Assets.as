@@ -16,5 +16,8 @@ package org.alwaysinbeta.species.assets {
 		// embed particle texture
 		[Embed(source = "particles/texture.png")]
 		public static const ParticleTexture:Class;
+		
+		[Embed(source="tilemaps/Level_1.oel", mimeType="application/octet-stream")] 
+		public static const Level1:Class;
 	}
 }

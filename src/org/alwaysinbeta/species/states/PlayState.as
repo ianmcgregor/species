@@ -1,6 +1,4 @@
 package org.alwaysinbeta.species.states {
-	import org.alwaysinbeta.species.systems.EnemyShooterSystem;
-	import org.alwaysinbeta.species.systems.HealthBarRenderSystem;
 	import com.artemis.Entity;
 	import com.artemis.EntitySystem;
 	import com.artemis.SystemManager;
@@ -8,14 +6,17 @@ package org.alwaysinbeta.species.states {
 
 	import org.alwaysinbeta.games.base.GameContainer;
 	import org.alwaysinbeta.species.Species;
+	import org.alwaysinbeta.species.assets.Assets;
 	import org.alwaysinbeta.species.constants.EntityTag;
 	import org.alwaysinbeta.species.constants.StateConstants;
 	import org.alwaysinbeta.species.factories.EntityFactory;
 	import org.alwaysinbeta.species.systems.BulletCollisionSystem;
 	import org.alwaysinbeta.species.systems.CollisionSystem;
 	import org.alwaysinbeta.species.systems.EnemyMovementSystem;
-	import org.alwaysinbeta.species.systems.EnemySpawnSystem;
+	import org.alwaysinbeta.species.systems.EnemyShooterSystem;
 	import org.alwaysinbeta.species.systems.ExpirationSystem;
+	import org.alwaysinbeta.species.systems.HealthBarRenderSystem;
+	import org.alwaysinbeta.species.systems.LevelInitializeSystem;
 	import org.alwaysinbeta.species.systems.MovementSystem;
 	import org.alwaysinbeta.species.systems.PlayerControlSystem;
 	import org.alwaysinbeta.species.systems.RenderSystem;
@@ -32,11 +33,12 @@ package org.alwaysinbeta.species.states {
 		private var _enemyMovementSystem : EntitySystem;
 		private var _renderSystem : EntitySystem;
 		private var _expirationSystem : EntitySystem;
-		private var _enemySpawnSystem : EntitySystem;
+//		private var _enemySpawnSystem : EntitySystem;
 		private var _movementSystem : EntitySystem;
 		private var _bulletCollisionSystem : EntitySystem;
 		private var _healthBarRenderSystem : EntitySystem;
 		private var _enemyShooterSystem : EntitySystem;
+		private var _levelInitializeSystem : EntitySystem;
 
 		public function PlayState(container : GameContainer, main : Species) {
 			super();
@@ -61,16 +63,18 @@ package org.alwaysinbeta.species.states {
 			_enemyMovementSystem = systemManager.setSystem(new EnemyMovementSystem(_container));
 			_renderSystem = systemManager.setSystem(new RenderSystem(_container));
 			_expirationSystem = systemManager.setSystem(new ExpirationSystem());
-			_enemySpawnSystem = systemManager.setSystem(new EnemySpawnSystem(2000, _container));
+//			_enemySpawnSystem = systemManager.setSystem(new EnemySpawnSystem(2000, _container));
 			_movementSystem = systemManager.setSystem(new MovementSystem(_container));
 			_bulletCollisionSystem = systemManager.setSystem(new BulletCollisionSystem());
 			_healthBarRenderSystem = systemManager.setSystem(new HealthBarRenderSystem());
 			_enemyShooterSystem = systemManager.setSystem(new EnemyShooterSystem());
+			_levelInitializeSystem = systemManager.setSystem(new LevelInitializeSystem());
 			
 			systemManager.initializeAll();
 			
 			// init entities
 			
+			EntityFactory.createLevel(_world, XML(new Assets.Level1()));
 			EntityFactory.createHero(_world);
 		}
 		
@@ -90,12 +94,12 @@ package org.alwaysinbeta.species.states {
 			}
 			
 			// process systems
-			
+			_levelInitializeSystem.process();
 			_collisionSystem.process();
 			_playerControlSystem.process();
-			_enemyMovementSystem.process();
+			//_enemyMovementSystem.process();
 			_expirationSystem.process();
-			_enemySpawnSystem.process();
+//			_enemySpawnSystem.process();
 			_movementSystem.process();
 			_bulletCollisionSystem.process();
 			_healthBarRenderSystem.process();

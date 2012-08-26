@@ -24,7 +24,7 @@ package org.alwaysinbeta.species.spatials {
 			var transformMapper : ComponentMapper = new ComponentMapper(Transform, _world);
 			_transform = transformMapper.get(_owner);
 
-			_quad = new Quad(20, 20);
+			_quad = new Quad(32, 32);
 			_quad.color = 0xff0000;
 		}
 
@@ -33,7 +33,9 @@ package org.alwaysinbeta.species.spatials {
 			var y : Number = _transform.y;
 			_quad.x = x;
 			_quad.y = y;
-			g.addChild(_quad);
+			if (!g.contains(_quad)) {
+				g.addChild(_quad);
+			}
 		}
 		
 		override public function remove(g : Canvas) : void {

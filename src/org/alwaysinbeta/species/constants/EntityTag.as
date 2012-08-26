@@ -6,5 +6,6 @@ package org.alwaysinbeta.species.constants {
 		public static const HERO : String = "HERO";
 		public static const ENEMY : String = "ENEMY";
 		public static const HEALTH_BAR : String = "HEALTH_BAR";
+		public static const LEVEL : String = "LEVEL";
 	}
 }

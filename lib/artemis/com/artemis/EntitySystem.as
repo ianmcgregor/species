@@ -98,8 +98,6 @@ package com.artemis {
 
 		public function change(e : Entity) : void {
 //			trace("EntitySystem.change(",e,")");
-			// FIXME: contains is not working correctly
-			//var contains : Boolean = false;
 			var contains : Boolean = (_systemBit & e.getSystemBits()) == _systemBit;
 			var interest : Boolean = (_typeFlags & e.getTypeBits()) == _typeFlags;
 			//contains = e.added;
