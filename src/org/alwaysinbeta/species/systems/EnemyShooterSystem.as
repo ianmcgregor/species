@@ -16,6 +16,7 @@ package org.alwaysinbeta.species.systems {
 		private var _weaponMapper : ComponentMapper;
 		private var _now : int;
 		private var _transformMapper : ComponentMapper;
+		private var _velocityMapper : ComponentMapper;
 
 		public function EnemyShooterSystem() {
 			super(Transform, [Weapon, Enemy]);
@@ -24,6 +25,7 @@ package org.alwaysinbeta.species.systems {
 		override public function initialize() : void {
 			_weaponMapper = new ComponentMapper(Weapon, _world);
 			_transformMapper = new ComponentMapper(Transform, _world);
+			_velocityMapper = new ComponentMapper(Velocity, _world);
 		}
 
 		override protected function begin() : void {
@@ -32,21 +34,21 @@ package org.alwaysinbeta.species.systems {
 
 		override protected function processEntity(e : Entity) : void {
 			var weapon : Weapon = _weaponMapper.get(e);
-
-			if (weapon.getShotAt() + 100 < _now) {
-				
+			if (weapon.getShotAt() + 120 < _now) {
 				var transform : Transform = _transformMapper.get(e);
-				
 				var hero : Entity = _world.getTagManager().getEntity(EntityTag.HERO);
 				var heroTransform : Transform = _transformMapper.get(hero);
-				var direction : int = heroTransform.x > transform.x ? 1 : -1;
-				var bulletX: int = direction > 0 ? transform.x + 34 : transform.x + 2;
-				var bullet : Entity = EntityFactory.createBullet(_world);
-				Transform(bullet.getComponent(Transform)).setLocation( bulletX, transform.y);
-				Velocity(bullet.getComponent(Velocity)).velocityX = 8 * direction;
-//				Velocity(missile.getComponent(Velocity)).setAngle(270);
-				bullet.refresh();
-
+				if( Math.abs(transform.y - heroTransform.y) < 40){
+					var velocity : Velocity = _velocityMapper.get(e);
+					
+					var direction : int = velocity.velocityX > 0 ? 1 : -1;
+					var bulletX: int = direction > 0 ? transform.x + 36 : transform.x - 4;
+					var bullet : Entity = EntityFactory.createBullet(_world);
+					Transform(bullet.getComponent(Transform)).setLocation( bulletX, transform.y);
+					Velocity(bullet.getComponent(Velocity)).velocityX = 20 * direction;
+	//				Velocity(missile.getComponent(Velocity)).setAngle(270);
+					bullet.refresh();
+				}
 				weapon.setShotAt(_now);
 			}
 		}

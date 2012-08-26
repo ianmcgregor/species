@@ -74,14 +74,13 @@ package org.alwaysinbeta.species.systems {
 
 			if (_isJumping) {
 				_jumpPower -= 0.05;
-				trace('_jumpPower: ' + (_jumpPower));
 				velocity.velocityY = _world.getDelta() * -_jumpPower;
 				if(getTimer() - _moveUpTime > 200){
 					_isJumping = false;
 				}
 			} else  if (_moveUp && ( _level.collides(transform.x, transform.y + 33 ) || _level.collides(transform.x + 32, transform.y + 33 ) )) {
-				velocity.velocityY = _world.getDelta() * -_jumpPower;
 				_jumpPower = 0.8;
+				velocity.velocityY = _world.getDelta() * -_jumpPower;
 				_isJumping = true;
 				_moveDown = false;
 				_moveUpTime = getTimer();
@@ -102,7 +101,7 @@ package org.alwaysinbeta.species.systems {
 			
 			if (_shoot) {
 				var direction : int = _lastDirection;
-				var bulletX: int = direction > 0 ? transform.x + 34 : transform.x + 2;
+				var bulletX: int = direction > 0 ? transform.x + 34 : transform.x - 2;
 				var bullet : Entity = EntityFactory.createBullet(_world);
 				Transform(bullet.getComponent(Transform)).setLocation(bulletX, transform.y);
 				Velocity(bullet.getComponent(Velocity)).velocityX = 10 * direction;

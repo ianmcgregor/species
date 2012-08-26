@@ -19,7 +19,7 @@ package org.alwaysinbeta.species.systems {
 		private var _transformMapper : ComponentMapper;
 		private var _velocityMapper : ComponentMapper;
 		private const SPEED: Number = 0.15;
-		private const MIN_DISTANCE : int = 15;
+		private const MIN_DISTANCE : int = 1;
 		private var _levelMapper : ComponentMapper;
 		private var _isJumping : Boolean;
 		private var _jumpPower : Number;
@@ -42,7 +42,9 @@ package org.alwaysinbeta.species.systems {
 			var transform : Transform = _transformMapper.get(e);
 			var velocity : Velocity = _velocityMapper.get(e);
 			velocity.velocityX = velocity.velocityY = 0;
-
+			if(velocity.speed == 0) {
+				velocity.speed = 0.1 + Math.random() * 0.1;
+			}
 			var hero : Entity = _world.getTagManager().getEntity(EntityTag.HERO);
 			var heroTransform : Transform = _transformMapper.get(hero);
 			var distance: int = transform.getDistanceTo(heroTransform);
@@ -53,19 +55,35 @@ package org.alwaysinbeta.species.systems {
 			var moveLeft : Boolean;
 			var moveRight : Boolean;
 			if( approach ) {
-				moveUp = heroTransform.y < transform.y - MIN_DISTANCE;
-				moveDown = heroTransform.y > transform.y + MIN_DISTANCE;
+				//moveUp = heroTransform.y < transform.y - MIN_DISTANCE;
+				//moveDown = heroTransform.y > transform.y + MIN_DISTANCE;
 				moveLeft = heroTransform.x < transform.x - MIN_DISTANCE;
 				moveRight = heroTransform.x > transform.x + 32 + MIN_DISTANCE;
+				var amount : Number = _world.getDelta() * velocity.speed;
 				
+
+				if (moveLeft) {
+					velocity.velocityX = -amount;
+				} else if(moveRight) {
+					velocity.velocityX = amount;
+				}
+				
+				var topLeft : Boolean = level.collides(transform.x, transform.y);
+				var topRight : Boolean = level.collides(transform.x + 32, transform.y);
 				var bottomLeft : Boolean = level.collides(transform.x, transform.y + 32);
 				var bottomRight : Boolean = level.collides(transform.x + 32, transform.y + 32);
+				
+				if(moveLeft && level.collides(transform.x + velocity.velocityX, transform.y + 32) && !level.collides(transform.x + velocity.velocityX, transform.y)) {
+					moveUp = true;
+				}
+				if(moveRight && level.collides(transform.x + 32 + velocity.velocityX, transform.y + 32) && !level.collides(transform.x + 32 + velocity.velocityX, transform.y)) {
+					moveUp = true;
+				}
 	
 				if (!_isJumping && !bottomLeft && !bottomRight) {
 					moveDown = true;
 				}
 				
-				var amount : Number = _world.getDelta() * SPEED;
 				if (_isJumping) {
 					_jumpPower -= 0.05;
 					velocity.velocityY = _world.getDelta() * -_jumpPower;
@@ -73,27 +91,15 @@ package org.alwaysinbeta.species.systems {
 						_isJumping = false;
 					}
 				} else  if (moveUp && ( level.collides(transform.x, transform.y + 33 ) || level.collides(transform.x + 32, transform.y + 33 ) )) {
+					trace('jump!');
 					velocity.velocityY = _world.getDelta() * -_jumpPower;
 					_jumpPower = 0.5;
 					_isJumping = true;
 					moveDown = false;
 					_moveUpTime = getTimer();
 				} 
-//				if (moveUp) {
-////					transform.addY(_world.getDelta() * -SPEED);
-//					//velocity.velocityY = -amount;
-//				} else 
-				
 				if(moveDown) {
-//					transform.addY(_world.getDelta() * SPEED);
 					velocity.velocityY = amount;
-				}
-				if (moveLeft) {
-//					transform.addX(_world.getDelta() * -SPEED);
-					velocity.velocityX = -amount;
-				} else if(moveRight) {
-//					transform.addX(_world.getDelta() * SPEED);
-					velocity.velocityX = amount;
 				}
 			}
 		}

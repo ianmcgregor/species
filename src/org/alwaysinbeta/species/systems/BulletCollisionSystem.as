@@ -1,4 +1,5 @@
 package org.alwaysinbeta.species.systems {
+	import org.alwaysinbeta.species.constants.EntityTag;
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
 	import com.artemis.EntitySystem;
@@ -30,6 +31,7 @@ package org.alwaysinbeta.species.systems {
 			
 			var bullets : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.BULLETS);
 			var enemies : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.ENEMIES);
+			var hero : Entity = _world.getTagManager().getEntity(EntityTag.HERO);
 
 			if (bullets != null && enemies != null) {
 				enemyLoop:
@@ -56,6 +58,11 @@ package org.alwaysinbeta.species.systems {
 								_world.deleteEntity(enemy);
 								continue enemyLoop;
 							}
+						}
+						
+						if(collisionExists(bullet, hero)) {
+							var heroHealth : Health = _healthMapper.get(hero);
+							heroHealth.addDamage(4);
 						}
 					}
 				}

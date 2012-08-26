@@ -76,11 +76,11 @@ package org.alwaysinbeta.species.factories {
 
 			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(EnemyGfx));
-			e.addComponent(new Health(10));
+			e.addComponent(new Health(100));
 			e.addComponent(new Weapon());
 			e.addComponent(new Enemy());
 			e.addComponent(new Velocity());
-			e.addComponent(new CollisionRect(0, 0, 20, 20));
+			e.addComponent(new CollisionRect(0, 0, 32, 32));
 
 			return e;
 		}
