@@ -5,9 +5,8 @@ package org.alwaysinbeta.species {
 
 	import org.alwaysinbeta.games.base.BaseGame;
 	import org.alwaysinbeta.games.base.GameContainer;
-	import org.alwaysinbeta.games.debug.FPS;
-	import org.alwaysinbeta.games.debug.Monitor;
 	import org.alwaysinbeta.species.constants.StateConstants;
+	import org.alwaysinbeta.species.states.GameCompleteState;
 	import org.alwaysinbeta.species.states.GameOverState;
 	import org.alwaysinbeta.species.states.IState;
 	import org.alwaysinbeta.species.states.PlayState;
@@ -23,8 +22,8 @@ package org.alwaysinbeta.species {
 	
 	public final class Species extends BaseGame {
 		private var _container : GameContainer;
-		private var _debug : Monitor;
-		private var _fps : FPS;
+//		private var _debug : Monitor;
+//		private var _fps : FPS;
 		private var _state : IState;
 		private var _states : Dictionary;
 		
@@ -38,12 +37,12 @@ package org.alwaysinbeta.species {
 			
 			addChild(_container = new GameContainer( Starling.current.stage.stageWidth, Starling.current.stage.stageHeight));
 
-			addChild(_debug = new Monitor());
-			_debug.x = _container.getWidth() - _debug.width;
-			
-			addChild(_fps = new FPS());
-			_fps.x = _container.getWidth() - _fps.width;
-			_fps.y = 100;
+//			addChild(_debug = new Monitor());
+//			_debug.x = _container.getWidth() - _debug.width;
+//			
+//			addChild(_fps = new FPS());
+//			_fps.x = _container.getWidth() - _fps.width;
+//			_fps.y = 100;
 			
 			_states = new Dictionary();
 //			_states[StateConstants.TITLES] = new TitlesState(_container, this);
@@ -52,6 +51,7 @@ package org.alwaysinbeta.species {
 			_states[StateConstants.TITLES] = TitlesState;
 			_states[StateConstants.PLAY] = PlayState;
 			_states[StateConstants.GAME_OVER] = GameOverState;
+			_states[StateConstants.WON] = GameCompleteState;
 
 			changeState(StateConstants.TITLES);
 		
@@ -63,7 +63,7 @@ package org.alwaysinbeta.species {
 			_container.clear();
 			_state = new _states[state](_container, this);
 			_state.init();
-			if(_state.world) _debug.world = _state.world;
+//			if(_state.world) _debug.world = _state.world;
 		}
 
 		private function onEnterFrame(event : EnterFrameEvent) : void {

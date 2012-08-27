@@ -1,4 +1,5 @@
 package org.alwaysinbeta.species.systems {
+	import org.alwaysinbeta.species.components.Weapon;
 	import org.alwaysinbeta.species.factories.SoundFactory;
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
@@ -36,18 +37,26 @@ package org.alwaysinbeta.species.systems {
 		private var _isJumping : Boolean;
 		private var _jumpPower : Number;
 		private var _lastDirection : int;
+		private var _weaponMapper : ComponentMapper;
+		private var _now : int;
 
 		public function PlayerControlSystem(container : GameContainer) {
 			super(Transform, [Hero]);
 			_container = container;
 		}
+		
 
 		override public function initialize() : void {
 			_levelMapper = new ComponentMapper(Level, _world);
 			_transformMapper = new ComponentMapper(Transform, _world);
 			_velocityMapper = new ComponentMapper(Velocity, _world);
+			_weaponMapper = new ComponentMapper(Weapon, _world);
 			_container.getInput().addKeyListener(this);
 			_lastDirection = 1;
+		}
+		
+		override protected function begin() : void {
+			_now = getTimer();
 		}
 
 		override protected function processEntity(e : Entity) : void {
@@ -96,18 +105,16 @@ package org.alwaysinbeta.species.systems {
 			
 //			moveBy(velocity.velocityX, velocity.velocityY, transform, velocity);
 			
-			if (_shoot) {
+			var weapon : Weapon = _weaponMapper.get(e);
+			if (_shoot  && weapon.getShotAt() + 80 < _now) {
 				var direction : int = _lastDirection;
 				var bulletX: int = direction > 0 ? transform.x + 40 : transform.x - 4;
 				var bullet : Entity = EntityFactory.createBullet(_world);
 				Transform(bullet.getComponent(Transform)).setLocation(bulletX, transform.y + 20);
-				Velocity(bullet.getComponent(Velocity)).velocityX = 20 * direction;
-				Velocity(bullet.getComponent(Velocity)).velocityY = -2 + Math.random() * 4;
+				Velocity(bullet.getComponent(Velocity)).velocityX = 10 * direction;
+				Velocity(bullet.getComponent(Velocity)).velocityY = ( -2 + Math.random() * 4 );
 				bullet.refresh();
-				
-//				SoundFactory.shoot();
-
-//				_shoot = false;
+				weapon.setShotAt(_now);
 			}
 		}
 

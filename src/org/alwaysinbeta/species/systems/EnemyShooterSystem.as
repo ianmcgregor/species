@@ -44,7 +44,7 @@ package org.alwaysinbeta.species.systems {
 					var direction : int = velocity.velocityX > 0 ? 1 : -1;
 					var bulletX: int = direction > 0 ? transform.x + 36 : transform.x - 4;
 					var bullet : Entity = EntityFactory.createEnemyBullet(_world);
-					Transform(bullet.getComponent(Transform)).setLocation( bulletX, transform.y);
+					Transform(bullet.getComponent(Transform)).setLocation( bulletX, transform.y + 18);
 					Velocity(bullet.getComponent(Velocity)).velocityX = 20 * direction;
 	//				Velocity(missile.getComponent(Velocity)).setAngle(270);
 					bullet.refresh();

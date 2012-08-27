@@ -6,17 +6,17 @@ package org.alwaysinbeta.species.components {
 		private var _velocityY : Number;
 		private var _speed : Number;
 
-		public function Velocity(velocityX : int = 0, velocityY : Number = 0, speed : Number = 0) {
+		public function Velocity(velocityX : Number = 0, velocityY : Number = 0, speed : Number = 0) {
 			_velocityX = velocityX;
 			_velocityY = velocityY;
 			_speed = speed;
 		}
 
-		public function get velocityX() : int {
+		public function get velocityX() : Number {
 			return _velocityX;
 		}
 
-		public function set velocityX(velocityX : int) : void {
+		public function set velocityX(velocityX : Number) : void {
 			_velocityX = velocityX;
 		}
 

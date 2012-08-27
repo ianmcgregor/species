@@ -1,4 +1,5 @@
 package org.alwaysinbeta.species.states {
+	import org.alwaysinbeta.species.components.Hero;
 	import org.alwaysinbeta.species.systems.EnemyShipSystem;
 	import com.artemis.Entity;
 	import com.artemis.EntitySystem;
@@ -93,6 +94,12 @@ package org.alwaysinbeta.species.states {
 			if(!hero) {
 				_main.changeState(StateConstants.GAME_OVER);
 				return;
+			} else {
+				var heroComponent: Hero = Hero(hero.getComponent(Hero));
+				if(heroComponent.won){
+					_main.changeState(StateConstants.WON);
+					return;
+				}
 			}
 			
 			// process systems

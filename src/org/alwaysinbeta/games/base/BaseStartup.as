@@ -52,7 +52,7 @@ package org.alwaysinbeta.games.base {
             mStarling = new Starling(rootClass || BaseGame, stage, viewPort);
             mStarling.simulateMultitouch  = false;
             mStarling.enableErrorChecking = false;
-			mStarling.showStats = true;
+			mStarling.showStats = false;
 			mStarling.antiAliasing = 1;
             mStarling.start();
             

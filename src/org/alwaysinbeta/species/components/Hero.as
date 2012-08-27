@@ -5,6 +5,7 @@ package org.alwaysinbeta.species.components {
 	 * @author McFamily
 	 */
 	public class Hero extends Component {
+		public var won : Boolean;
 		public function Hero() {
 		}
 	}

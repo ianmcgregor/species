@@ -43,6 +43,7 @@ package org.alwaysinbeta.species.spatials {
 		}
 
 		override public function render(g : Canvas) : void {
+			trace("EnemyShipGfx.render(",g,")");
 			var x : Number = _transform.x;
 			var y : Number = _transform.y;
 			_gfx.x = x;
@@ -53,6 +54,7 @@ package org.alwaysinbeta.species.spatials {
 		}
 
 		override public function remove(g : Canvas) : void {
+			trace("EnemyShipGfx.remove(",g,")");
 			if (g.contains(_gfx)) {
 				g.removeChild(_gfx);
 				Starling.current.juggler.remove(_gfx);

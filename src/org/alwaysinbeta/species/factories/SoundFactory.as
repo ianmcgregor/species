@@ -22,5 +22,8 @@ package org.alwaysinbeta.species.factories {
 		public static function startLevel(): void {
 			Audio.play(getRandom(_acheivement));
 		}
+		public static function grapple(): void {
+			Audio.play(Sounds.Randomize20);
+		}
 	}
 }

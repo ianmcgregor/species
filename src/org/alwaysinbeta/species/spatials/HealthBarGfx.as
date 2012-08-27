@@ -1,6 +1,9 @@
 package org.alwaysinbeta.species.spatials {
 	import starling.display.Quad;
 	import starling.display.Sprite;
+	import starling.text.BitmapFont;
+	import starling.text.TextField;
+	import starling.utils.HAlign;
 
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
@@ -8,6 +11,7 @@ package org.alwaysinbeta.species.spatials {
 
 	import org.alwaysinbeta.games.base.Canvas;
 	import org.alwaysinbeta.games.base.Spatial;
+	import org.alwaysinbeta.games.utils.QuickText;
 	import org.alwaysinbeta.species.components.Health;
 	import org.alwaysinbeta.species.components.Transform;
 
@@ -22,7 +26,6 @@ package org.alwaysinbeta.species.spatials {
 		private var _bg : Quad;
 		private var _bar : Quad;
 		
-		
 		public function HealthBarGfx(world : World, owner : Entity) {
 			super(world, owner);
 		}
@@ -36,13 +39,17 @@ package org.alwaysinbeta.species.spatials {
 			
 			_container = new Sprite();
 			
+			_container.addChild( new TextField(35, 10, "HEALTH", BitmapFont.MINI, BitmapFont.NATIVE_SIZE, 0xFFFFFF, true) );
+			
 			_bg = new Quad(200, 10);
 			_bg.color = 0x333333;
+			_bg.x = 37;
 			_container.addChild(_bg);
 			
 			_bar = new Quad(198, 8);
 			_bar.color = 0x00ff00;
-			_bar.x = _bar.y = 1;
+			_bar.x = _bg.x + 1;
+			_bar.y = _bg.y + 1;
 			_container.addChild(_bar);
 		}
 

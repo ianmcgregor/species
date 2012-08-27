@@ -42,7 +42,7 @@ package org.alwaysinbeta.species.systems {
 			if(!_heroRect) _heroRect = new Rectangle(0,0,32,32);
 			 _heroRect.x = heroTransfrom.x;
 			 _heroRect.y = heroTransfrom.y;
-			if(level.exit.intersects(_heroRect)){
+			if(level.exit && level.exit.intersects(_heroRect)){
 				var num: int = level.num + 1;
 				_world.getEntityManager().remove(e);
 				e = EntityFactory.createLevel(_world, num);

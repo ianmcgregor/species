@@ -52,7 +52,7 @@ package org.alwaysinbeta.species.components {
 
 			
 			var exitXML: XML = xml.descendants('Exit')[0];
-			exit = new Rectangle(exitXML.@x, exitXML.@y, exitXML.@width, exitXML.@height);
+			exit = exitXML != null ? new Rectangle(exitXML.@x, exitXML.@y, exitXML.@width, exitXML.@height) : null;
 			
 			var xmlList : XMLList;
 			var node : XML;

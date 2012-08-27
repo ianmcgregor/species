@@ -30,7 +30,7 @@ package org.alwaysinbeta.games.base {
 		protected function onAddedToStage(event : Event) : void {
 			event;
 
-			addChild(new DebugDisplay());
+//			addChild(new DebugDisplay());
 		}
 
 		protected function onRemovedFromStage(event : Event) : void {

@@ -17,7 +17,7 @@ package org.alwaysinbeta.games.utils {
 			
 			addChild( _background = new Quad(width, height, 0x0) );
 			addChild( _textField = new TextField(width, height, text, BitmapFont.MINI, BitmapFont.NATIVE_SIZE, 0xFFFFFF, true) );
-			_textField.hAlign = HAlign.LEFT;
+//			_textField.hAlign = HAlign.LEFT;
 			blendMode = BlendMode.NONE;
 		}
 		

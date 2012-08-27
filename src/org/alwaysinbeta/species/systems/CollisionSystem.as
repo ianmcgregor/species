@@ -1,11 +1,13 @@
 package org.alwaysinbeta.species.systems {
+	import org.alwaysinbeta.species.factories.SoundFactory;
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
 	import com.artemis.EntityProcessingSystem;
 	import com.artemis.utils.IImmutableBag;
 
-	import org.alwaysinbeta.species.components.Health;
 	import org.alwaysinbeta.species.components.CollisionRect;
+	import org.alwaysinbeta.species.components.Health;
+	import org.alwaysinbeta.species.components.Hero;
 	import org.alwaysinbeta.species.components.Transform;
 	import org.alwaysinbeta.species.components.Velocity;
 	import org.alwaysinbeta.species.constants.EntityGroup;
@@ -48,6 +50,7 @@ package org.alwaysinbeta.species.systems {
 	
 						if (collisionExists(hero, enemy)) {
 							health.addDamage(1);
+							//SoundFactory.grapple();
 	
 							if (!health.isAlive()) {
 	
@@ -76,6 +79,17 @@ package org.alwaysinbeta.species.systems {
 								_world.deleteEntity(hero);
 								continue bombsLoop;
 							}
+						}
+					}
+				}
+				var friends : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.FRIENDS);
+				if (friends != null) {
+					for (var f : int = 0; friends.size() > f; f++) {
+						var friend : Entity = friends.get(f);
+	
+						if (collisionExists(hero, friend)) {
+							var heroComponent: Hero = Hero(hero.getComponent(Hero));
+							heroComponent.won = true;
 						}
 					}
 				}
