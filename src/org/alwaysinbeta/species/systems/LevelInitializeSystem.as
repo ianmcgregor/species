@@ -87,10 +87,23 @@ package org.alwaysinbeta.species.systems {
 					Transform(entity.getComponent(Transform)).setLocation(friends[i].x, friends[i].y);
 					entity.refresh();
 				}
+
+				var firePits: Vector.<Rectangle> = level.firePits;
+				l = firePits.length;
+				for (i = 0; i < l; ++i) {
+					entity = EntityFactory.createFirePit(_world);
+					Transform(entity.getComponent(Transform)).setLocation(firePits[i].x, firePits[i].y);
+					entity.refresh();
+				}
 				
 				if(level.ship) {
 					entity = EntityFactory.createEnemyShip(_world);
 					Transform(entity.getComponent(Transform)).setLocation(level.ship.x, level.ship.y);
+					entity.refresh();
+				}
+
+				if(level.wall) {
+					entity = EntityFactory.createWall(_world, level.wall);
 					entity.refresh();
 				}
 				
@@ -105,10 +118,12 @@ package org.alwaysinbeta.species.systems {
 			var bullets : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.BULLETS);
 			var enemies : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.ENEMIES);
 			var bombs : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.BOMBS);
+			var effects : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.EFFECTS);
 			
 			killAll(bullets);
 			killAll(enemies);
 			killAll(bombs);
+			killAll(effects);
 
 			var ship: Entity = _world.getTagManager().getEntity(EntityTag.ENEMY_SHIP);
 			if(ship) _world.deleteEntity(ship);

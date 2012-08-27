@@ -1,4 +1,7 @@
 package org.alwaysinbeta.species.factories {
+	import org.alwaysinbeta.species.spatials.FirePitGfx;
+	import org.alwaysinbeta.species.spatials.WallGfx;
+	import flash.geom.Rectangle;
 	import org.alwaysinbeta.species.spatials.BombGfx;
 	import org.alwaysinbeta.species.components.EnemyShip;
 	import org.alwaysinbeta.species.spatials.EnemyShipGfx;
@@ -48,7 +51,7 @@ package org.alwaysinbeta.species.factories {
 			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(HeroGfx));
 			e.addComponent(new CollisionRect(0, 0, 32, 32));
-			e.addComponent(new Health(1000));
+			e.addComponent(new Health(10000));
 			e.addComponent(new Hero());
 			e.refresh();
 			
@@ -71,7 +74,21 @@ package org.alwaysinbeta.species.factories {
 			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(BulletGfx));
 			e.addComponent(new Velocity());
-			e.addComponent(new Expires(1400));
+			e.addComponent(new Expires(2000));
+
+			return e;
+		}
+		
+		public static function createEnemyBullet(world : World) : Entity {
+			SoundFactory.shoot();
+			
+			var e : Entity = world.createEntity();
+			e.setGroup(EntityGroup.ENEMY_BULLETS);
+
+			e.addComponent(new Transform());
+			e.addComponent(new SpatialForm(BulletGfx));
+			e.addComponent(new Velocity());
+			e.addComponent(new Expires(2000));
 
 			return e;
 		}
@@ -145,6 +162,30 @@ package org.alwaysinbeta.species.factories {
 
 			return e;
 		}
+		
+		public static function createFirePit(world : World) : Entity {
+			var e : Entity = world.createEntity();
+
+			e.setGroup(EntityGroup.BOMBS);
+
+			e.addComponent(new Transform());
+			e.addComponent(new SpatialForm(FirePitGfx));
+			e.addComponent(new CollisionRect(0, 0, 32, 32));
+
+			return e;
+		}
+		
+		public static function createWall(world : World, rect: Rectangle) : Entity {
+			var e : Entity = world.createEntity();
+
+			e.setGroup(EntityGroup.BOMBS);
+
+			e.addComponent(new Transform(rect.x, rect.y));
+			e.addComponent(new SpatialForm(WallGfx));
+			e.addComponent(new CollisionRect(0, 0, rect.width, rect.height));
+
+			return e;
+		}
 
 		public static function createFriend(world : World) : Entity {
 			var e : Entity = world.createEntity();
@@ -153,7 +194,6 @@ package org.alwaysinbeta.species.factories {
 
 			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(FriendGfx));
-			e.addComponent(new Health(10));
 			e.addComponent(new Friend());
 			e.addComponent(new Velocity());
 

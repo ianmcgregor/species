@@ -1,0 +1,55 @@
+package org.alwaysinbeta.species.spatials {
+	import starling.core.Starling;
+	import starling.extensions.PDParticleSystem;
+	import starling.textures.Texture;
+
+	import com.artemis.ComponentMapper;
+	import com.artemis.Entity;
+	import com.artemis.World;
+
+	import org.alwaysinbeta.games.base.Canvas;
+	import org.alwaysinbeta.games.base.Spatial;
+	import org.alwaysinbeta.species.assets.Assets;
+	import org.alwaysinbeta.species.components.Transform;
+
+
+
+	public class FirePitGfx extends Spatial {
+		private var _transform : Transform;
+		private var _particleSystem : PDParticleSystem;
+
+		public function FirePitGfx(world : World, owner : Entity) {
+			super(world, owner);
+		}
+
+		override public function initalize() : void {
+			var transformMapper : ComponentMapper = new ComponentMapper(Transform, _world);
+			_transform = transformMapper.get(_owner);
+			
+			var pex : XML =Assets.fireBall2Pex;
+			var texture : Texture = Assets.fireBall2Texture;
+			_particleSystem = new PDParticleSystem(pex, texture);
+			Starling.juggler.add(_particleSystem);
+			_particleSystem.start();
+		}
+
+		override public function render(g : Canvas) : void {
+			if(!g.contains(_particleSystem))
+			{
+				g.addChild(_particleSystem);
+			}
+			
+			_particleSystem.emitterX = _transform.x + 16;
+			_particleSystem.emitterY = _transform.y + 16;
+		}
+		
+		override public function remove(g : Canvas) : void {
+			if (g.contains(_particleSystem)) {
+				g.removeChild(_particleSystem);
+				_particleSystem.stop();
+				Starling.juggler.remove(_particleSystem);
+			}
+		}
+
+	}
+}

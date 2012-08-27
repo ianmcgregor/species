@@ -54,6 +54,12 @@ package org.alwaysinbeta.species.assets {
 		[Embed(source="tilemaps/Level_3.oel", mimeType="application/octet-stream")] 
 		private static const Level3:Class;
 		
+		[Embed(source="tilemaps/Level_4.oel", mimeType="application/octet-stream")] 
+		private static const Level4:Class;
+		
+		[Embed(source="tilemaps/Level_5.oel", mimeType="application/octet-stream")] 
+		private static const Level5:Class;
+		
 		public static function getLevel(num: int): XML {
 			switch(num){
 				case 1:
@@ -64,6 +70,12 @@ package org.alwaysinbeta.species.assets {
 					break;
 				case 3:
 					return XML(new Level3());
+					break;
+				case 4:
+					return XML(new Level4());
+					break;
+				case 5:
+					return XML(new Level5());
 					break;
 				default:
 			}

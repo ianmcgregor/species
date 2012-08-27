@@ -8,5 +8,6 @@ package org.alwaysinbeta.species.constants {
 		public static const BULLETS : String = "BULLETS";
 		public static const EFFECTS : String = "EFFECTS";
 		public static const BOMBS : String = "BOMBS";
+		public static const ENEMY_BULLETS : String = "ENEMY_BULLETS";
 	}
 }

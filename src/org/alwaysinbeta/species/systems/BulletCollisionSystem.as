@@ -1,6 +1,4 @@
 package org.alwaysinbeta.species.systems {
-	import org.alwaysinbeta.species.factories.SoundFactory;
-	import org.alwaysinbeta.species.constants.EntityTag;
 	import com.artemis.ComponentMapper;
 	import com.artemis.Entity;
 	import com.artemis.EntitySystem;
@@ -10,6 +8,7 @@ package org.alwaysinbeta.species.systems {
 	import org.alwaysinbeta.species.components.Transform;
 	import org.alwaysinbeta.species.components.Velocity;
 	import org.alwaysinbeta.species.constants.EntityGroup;
+	import org.alwaysinbeta.species.constants.EntityTag;
 	import org.alwaysinbeta.species.factories.EntityFactory;
 
 	public class BulletCollisionSystem extends EntitySystem {
@@ -31,6 +30,7 @@ package org.alwaysinbeta.species.systems {
 			entities;
 			
 			var bullets : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.BULLETS);
+			var enemyBullets : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.ENEMY_BULLETS);
 			var enemies : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.ENEMIES);
 			var hero : Entity = _world.getTagManager().getEntity(EntityTag.HERO);
 
@@ -61,16 +61,24 @@ package org.alwaysinbeta.species.systems {
 								continue enemyLoop;
 							}
 						}
+					}
+				}
+			}
+			
+			if (enemyBullets != null) {
+				for (var j : int = 0; enemyBullets.size() > j; j++) {
+					var enemyBullet : Entity = enemyBullets.get(j);
+	
+					if(collisionExists(enemyBullet, hero)) {
+						trace('hero shot!');
 						
-						if(collisionExists(bullet, hero)) {
-							var heroHealth : Health = _healthMapper.get(hero);
-							heroHealth.addDamage(4);
-							
-							if (!heroHealth.isAlive()) {
-								var t : Transform = _transformMapper.get(hero);
-								EntityFactory.createExplosion(_world, t.x, t.y).refresh();
-								_world.deleteEntity(hero);
-							}
+						var heroHealth : Health = _healthMapper.get(hero);
+						heroHealth.addDamage(4);
+						
+						if (!heroHealth.isAlive()) {
+							var t : Transform = _transformMapper.get(hero);
+							EntityFactory.createExplosion(_world, t.x, t.y).refresh();
+							_world.deleteEntity(hero);
 						}
 					}
 				}
