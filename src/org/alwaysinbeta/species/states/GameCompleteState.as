@@ -31,7 +31,7 @@ package org.alwaysinbeta.species.states {
 		public function init() : void {
 			
 			_container.addChild(_menu = new Sprite());
-			_menu.addChild(_title = new QuickText(40, 10, "YOU WON"));
+			_menu.addChild(_title = new QuickText(100, 10, "YOU WON"));
 			_title.scaleX = _title.scaleY = 6;
 			_menu.addChild(_body = new QuickText(200, 100, "Thanks for playing!"));
 			_body.scaleX = _body.scaleY = 2;
