@@ -44,7 +44,7 @@ package org.alwaysinbeta.species.factories {
 		}
 		
 		public static function createHero(world : World) : Entity {
-			var heroHealth: Number = 10000;
+			var heroHealth: Number = 1000;
 			
 			var e : Entity;
 			e = world.createEntity();
@@ -104,7 +104,7 @@ package org.alwaysinbeta.species.factories {
 
 			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(EnemyGfx));
-			e.addComponent(new Health(30));
+			e.addComponent(new Health(25));
 			e.addComponent(new Weapon());
 			e.addComponent(new Enemy());
 			e.addComponent(new Velocity());
@@ -119,7 +119,7 @@ package org.alwaysinbeta.species.factories {
 
 			e.addComponent(new Transform());
 			e.addComponent(new SpatialForm(EnemyGfx));
-			e.addComponent(new Health(40));
+			e.addComponent(new Health(30));
 			e.addComponent(new Enemy());
 			e.addComponent(new Velocity());
 			e.addComponent(new CollisionRect(0, 0, 32, 32));
