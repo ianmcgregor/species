@@ -1,4 +1,5 @@
 package org.alwaysinbeta.species.systems {
+	import org.alwaysinbeta.species.components.CollisionRect;
 	import org.alwaysinbeta.species.components.Weapon;
 	import org.alwaysinbeta.species.factories.SoundFactory;
 	import com.artemis.ComponentMapper;
@@ -39,6 +40,7 @@ package org.alwaysinbeta.species.systems {
 		private var _lastDirection : int;
 		private var _weaponMapper : ComponentMapper;
 		private var _now : int;
+		private var _rectMapper : ComponentMapper;
 
 		public function PlayerControlSystem(container : GameContainer) {
 			super(Transform, [Hero]);
@@ -51,6 +53,7 @@ package org.alwaysinbeta.species.systems {
 			_transformMapper = new ComponentMapper(Transform, _world);
 			_velocityMapper = new ComponentMapper(Velocity, _world);
 			_weaponMapper = new ComponentMapper(Weapon, _world);
+			_rectMapper = new ComponentMapper(CollisionRect, _world);
 			_container.getInput().addKeyListener(this);
 			_lastDirection = 1;
 		}
@@ -65,17 +68,24 @@ package org.alwaysinbeta.species.systems {
 
 			var transform : Transform = _transformMapper.get(e);
 			var velocity : Velocity = _velocityMapper.get(e);
+			var rect : CollisionRect = _rectMapper.get(e);
 			velocity.velocityX = velocity.velocityY = 0;
 
 			var amount : Number = _world.getDelta() * SPEED;
 
-			var topLeft : Boolean = _level.collides(transform.x, transform.y);
-			var topRight : Boolean = _level.collides(transform.x + 32, transform.y);
-			var bottomLeft : Boolean = _level.collides(transform.x, transform.y + 32);
-			var bottomRight : Boolean = _level.collides(transform.x + 32, transform.y + 32);
+//			var topLeft : Boolean = _level.collides(transform.x, transform.y);
+//			var topRight : Boolean = _level.collides(transform.x + 32, transform.y);
+//			var bottomLeft : Boolean = _level.collides(transform.x, transform.y + 32);
+//			var bottomRight : Boolean = _level.collides(transform.x + 32, transform.y + 32);
+			
+			var bottomLeft : Boolean = _level.collides(transform.x + rect.rect.x, transform.y + rect.rect.y + rect.rect.height + 1);
+//			trace('bottomLeft: ' + (bottomLeft));
+			var bottomRight : Boolean = _level.collides(transform.x + rect.rect.width + rect.rect.x, transform.y + rect.rect.y + rect.rect.height + 1);
+//			trace('bottomRight: ' + (bottomRight));
 
 			if (!_isJumping && !bottomLeft && !bottomRight) {
 				_moveDown = true;
+//				trace('_moveDown: ' + (_moveDown));
 			}
 
 			if (_isJumping) {
@@ -84,7 +94,7 @@ package org.alwaysinbeta.species.systems {
 				if(getTimer() - _moveUpTime > 200){
 					_isJumping = false;
 				}
-			} else  if (_moveUp && ( _level.collides(transform.x, transform.y + 33 ) || _level.collides(transform.x + 32, transform.y + 33 ) )) {
+			} else  if (_moveUp && (bottomLeft || bottomRight)) {
 				_jumpPower = 0.8;
 				velocity.velocityY = _world.getDelta() * -_jumpPower;
 				_isJumping = true;

@@ -115,14 +115,18 @@ package org.alwaysinbeta.species.systems {
 		}
 
 		private function clear() : void {
-			var bullets : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.BULLETS);
+			var heroBullets : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.BULLETS);
+			var bullets : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.ENEMY_BULLETS);
 			var enemies : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.ENEMIES);
 			var bombs : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.BOMBS);
+			var fires : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.FIRES);
 			var effects : IImmutableBag = _world.getGroupManager().getEntities(EntityGroup.EFFECTS);
 			
-			killAll(bullets);
 			killAll(enemies);
+			killAll(bullets);
+			killAll(heroBullets);
 			killAll(bombs);
+			killAll(fires);
 			killAll(effects);
 
 			var ship: Entity = _world.getTagManager().getEntity(EntityTag.ENEMY_SHIP);

@@ -38,7 +38,7 @@ package org.alwaysinbeta.species.systems {
 				var transform : Transform = _transformMapper.get(e);
 				var hero : Entity = _world.getTagManager().getEntity(EntityTag.HERO);
 				var heroTransform : Transform = _transformMapper.get(hero);
-				if( Math.abs(transform.y - heroTransform.y) < 40){
+				if( Math.abs(transform.y - heroTransform.y) < 50){
 					var velocity : Velocity = _velocityMapper.get(e);
 					
 					var direction : int = velocity.velocityX > 0 ? 1 : -1;

@@ -67,6 +67,8 @@ package org.alwaysinbeta.species.spatials {
 					_gfx.pause();
 				}
 			}
+			
+//			showCollisionRect(g, _transform.x, _transform.y);
 		}
 	}
 }

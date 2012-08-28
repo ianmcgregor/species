@@ -93,7 +93,7 @@ package org.alwaysinbeta.species.components {
 //    		<Exit id="3" x="624" y="112" width="16" height="208" />
 		}
 		
-		public function collides(x: int, y: int): Boolean {
+		public function collides(x: Number, y: Number): Boolean {
 			 var i: int = int(y / 16);
 			 var j: int = int(x / 16);
 			 if(map == null || i < 0 || i > map.length -1) return true;

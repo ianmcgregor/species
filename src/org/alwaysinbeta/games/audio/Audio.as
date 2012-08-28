@@ -11,7 +11,7 @@ package org.alwaysinbeta.games.audio {
 			// sound already exists?
 			var sound : AudioObject = get(SoundClass);
 			if (!sound) {
-				trace('SoundClass: ' + (SoundClass));
+//				trace('SoundClass: ' + (SoundClass));
 				sound = new AudioObject(new SoundClass());
 				_soundObjects[SoundClass] = sound;
 			}
@@ -23,7 +23,7 @@ package org.alwaysinbeta.games.audio {
 		}
 
 		public static function play(SoundClass: Class) : void {
-			trace("Audio.play(",SoundClass,")");
+//			trace("Audio.play(",SoundClass,")");
 			add(SoundClass).play();
 		}
 //		public static function add(id : String, data : Sound) : AudioObject {

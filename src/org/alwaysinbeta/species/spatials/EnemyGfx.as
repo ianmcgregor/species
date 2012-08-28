@@ -1,8 +1,7 @@
 package org.alwaysinbeta.species.spatials {
-	import org.alwaysinbeta.species.components.Weapon;
-	import org.alwaysinbeta.species.components.Velocity;
 	import starling.core.Starling;
 	import starling.display.MovieClip;
+	import starling.display.Quad;
 	import starling.textures.Texture;
 
 	import com.artemis.ComponentMapper;
@@ -12,7 +11,10 @@ package org.alwaysinbeta.species.spatials {
 	import org.alwaysinbeta.games.base.Canvas;
 	import org.alwaysinbeta.games.base.Spatial;
 	import org.alwaysinbeta.species.assets.Assets;
+	import org.alwaysinbeta.species.components.CollisionRect;
 	import org.alwaysinbeta.species.components.Transform;
+	import org.alwaysinbeta.species.components.Velocity;
+	import org.alwaysinbeta.species.components.Weapon;
 
 	/**
 	 * @author McFamily
@@ -76,6 +78,8 @@ package org.alwaysinbeta.species.spatials {
 					_gfx.pause();
 				}
 			}
+			
+//			showCollisionRect(g, _transform.x, _transform.y);
 		}
 
 		override public function remove(g : Canvas) : void {

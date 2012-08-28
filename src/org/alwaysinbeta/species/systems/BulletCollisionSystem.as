@@ -4,6 +4,7 @@ package org.alwaysinbeta.species.systems {
 	import com.artemis.EntitySystem;
 	import com.artemis.utils.IImmutableBag;
 
+	import org.alwaysinbeta.species.components.CollisionRect;
 	import org.alwaysinbeta.species.components.Health;
 	import org.alwaysinbeta.species.components.Transform;
 	import org.alwaysinbeta.species.components.Velocity;
@@ -11,10 +12,13 @@ package org.alwaysinbeta.species.systems {
 	import org.alwaysinbeta.species.constants.EntityTag;
 	import org.alwaysinbeta.species.factories.EntityFactory;
 
+	import flash.geom.Rectangle;
+
 	public class BulletCollisionSystem extends EntitySystem {
 		private var _transformMapper : ComponentMapper;
 		private var _velocityMapper : ComponentMapper;
 		private var _healthMapper : ComponentMapper;
+		private var _rectMapper : ComponentMapper;
 
 		public function BulletCollisionSystem() {
 			super([Transform]);
@@ -24,6 +28,7 @@ package org.alwaysinbeta.species.systems {
 			_transformMapper = new ComponentMapper(Transform, _world);
 			_velocityMapper = new ComponentMapper(Velocity, _world);
 			_healthMapper = new ComponentMapper(Health, _world);
+			_rectMapper = new ComponentMapper(CollisionRect, _world);
 		}
 
 		override protected function processEntities(entities : IImmutableBag) : void {
@@ -85,10 +90,26 @@ package org.alwaysinbeta.species.systems {
 			}
 		}
 
+		private const _tempRect1: Rectangle = new Rectangle();
+		private const _tempRect2: Rectangle = new Rectangle();
+		
 		private function collisionExists(e1 : Entity, e2 : Entity) : Boolean {
 			var t1 : Transform = _transformMapper.get(e1);
 			var t2 : Transform = _transformMapper.get(e2);
-			return t1.getDistanceTo(t2) < 15;
+			var r1 : CollisionRect = _rectMapper.get(e1);
+			var r2 : CollisionRect = _rectMapper.get(e2);
+			
+			_tempRect1.x = r1.rect.x + t1.x;
+			_tempRect1.y = r1.rect.y + t1.y;
+			_tempRect1.width = r1.rect.width;
+			_tempRect1.height = r1.rect.height;
+			
+			_tempRect2.x = r2.rect.x + t2.x;
+			_tempRect2.y = r2.rect.y + t2.y;
+			_tempRect2.width = r2.rect.width;
+			_tempRect2.height = r2.rect.height;
+			
+			return _tempRect1.intersects(_tempRect2);
 		}
 
 		override protected function checkProcessing() : Boolean {

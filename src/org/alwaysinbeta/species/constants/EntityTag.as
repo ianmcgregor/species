@@ -8,5 +8,6 @@ package org.alwaysinbeta.species.constants {
 		public static const HEALTH_BAR : String = "HEALTH_BAR";
 		public static const LEVEL : String = "LEVEL";
 		public static const ENEMY_SHIP : String = "ENEMY_SHIP";
+		public static const WALL : String = "WALL";
 	}
 }

@@ -43,7 +43,7 @@ package org.alwaysinbeta.species.systems {
 			var weapon : Weapon = _weaponMapper.get(e);
 			var transform : Transform = _transformMapper.get(e);
 			var velocity : Velocity = _velocityMapper.get(e);
-			if (weapon.getShotAt() + 500 < _now) {
+			if (weapon.getShotAt() + 300 < _now) {
 				var bombEntity : Entity = EntityFactory.createBomb(_world, transform.x + 32, transform.y + 48);
 				Velocity(bombEntity.getComponent(Velocity)).velocityY = 6;
 				bombEntity.refresh();
